@@ -14,7 +14,7 @@ public class EntryActivity extends AppCompatActivity {
 
         Intent launchIntent = new Intent();
         Class<?> launchActivity;
-        if(true)
+        if(false)
         {
             launchActivity = LoginActivity.class;
         }
