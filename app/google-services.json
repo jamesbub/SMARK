@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1036989926564",
+    "firebase_url": "https://smark-28537.firebaseio.com",
+    "project_id": "smark-28537",
+    "storage_bucket": "smark-28537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036989926564:android:703867882d7f5a65",
+        "android_client_info": {
+          "package_name": "com.roomapp.james.smark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036989926564-puvb42k25atu1q49oh8802umu2nkrf3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7axj1SZN1pv6GQv9nnLC-8WdbZaw901o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
