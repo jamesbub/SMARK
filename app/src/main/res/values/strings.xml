@@ -15,4 +15,9 @@
         completions."
     </string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="create_one">No account yet? Create one</string>
+    <string name="login_btn">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="email_hint">Email</string>
+    <string name="smark_logo">SMARK Logo</string>
 </resources>
