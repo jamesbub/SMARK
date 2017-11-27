@@ -10,19 +10,9 @@ public class EntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry);
 
         Intent launchIntent = new Intent();
-        Class<?> launchActivity;
-        if(true)
-        {
-            launchActivity = LoginActivity.class;
-        }
-        else
-        {
-            launchActivity = MainActivity.class;
-        }
-        launchIntent.setClass(getApplicationContext(), launchActivity);
+        launchIntent.setClass(getApplicationContext(), MainActivity.class);
         startActivity(launchIntent);
 
         finish();
