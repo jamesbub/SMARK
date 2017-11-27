@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -54,6 +55,17 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        View header = navigationView.getHeaderView(0);
+        TextView nav_header_name = (TextView) header.findViewById(R.id.nav_header_name);
+        TextView nav_header_email = (TextView) header.findViewById(R.id.nav_header_email);
+
+        if (firebaseAuth.getCurrentUser().getDisplayName() != null) {
+            nav_header_name.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        }
+
+        nav_header_email.setText(firebaseAuth.getCurrentUser().getEmail());
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -83,6 +95,12 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_logout) {
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
             return true;
         }
 
