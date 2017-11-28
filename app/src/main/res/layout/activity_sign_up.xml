@@ -20,7 +20,7 @@
             android:layout_marginBottom="24dp"
             android:gravity="top|center"
             android:textColor="@color/colorPrimaryDark"
-            android:text="@string/login_btn"
+            android:text="@string/signup_txt"
             android:textSize="32sp" />
 
         <ImageView
@@ -40,7 +40,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/input_email"
+                android:id="@+id/input_email_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email_hint"
@@ -55,7 +55,7 @@
             android:layout_marginTop="8dp">
 
             <EditText
-                android:id="@+id/input_password"
+                android:id="@+id/input_password_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password_hint"
@@ -63,7 +63,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_signup"
             style="@style/AppTheme"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -71,15 +71,15 @@
             android:layout_marginTop="24dp"
             android:background="@color/colorPrimaryDark"
             android:padding="12dp"
-            android:text="@string/login_btn" />
+            android:text="@string/btn_signup" />
 
         <TextView
-            android:id="@+id/link_signup"
+            android:id="@+id/link_sigin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:text="@string/create_one"
+            android:text="@string/already_signin"
             android:textSize="16sp" />
 
     </LinearLayout>

@@ -17,6 +17,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="create_one">No account yet? Create one</string>
     <string name="login_btn">Login</string>
+    <string name="signup_txt">Sign Up</string>
     <string name="password_hint">Password</string>
     <string name="email_hint">Email</string>
     <string name="smark_logo">SMARK Logo</string>
@@ -26,4 +27,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
+    <string name="btn_signup">Register</string>
+    <string name="already_signin">Already Signed In? Click here to Login</string>
 </resources>

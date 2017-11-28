@@ -1,6 +1,11 @@
 package com.roomapp.james.smark;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,49 +30,82 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        if (firebaseAuth.getCurrentUser() == null){
-
-            finish();
-            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-
-        }
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        if(isOnline()) {
+
+            firebaseAuth = FirebaseAuth.getInstance();
+
+            if (firebaseAuth.getCurrentUser() == null) {
+
+                finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
             }
-        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
 
-        View header = navigationView.getHeaderView(0);
-        TextView nav_header_name = (TextView) header.findViewById(R.id.nav_header_name);
-        TextView nav_header_email = (TextView) header.findViewById(R.id.nav_header_email);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
 
-        if (firebaseAuth.getCurrentUser().getDisplayName() != null) {
-            nav_header_name.setText(firebaseAuth.getCurrentUser().getDisplayName());
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+            View header = navigationView.getHeaderView(0);
+            TextView nav_header_name = (TextView) header.findViewById(R.id.nav_header_name);
+            TextView nav_header_email = (TextView) header.findViewById(R.id.nav_header_email);
+
+            if (firebaseAuth.getCurrentUser() != null) {
+
+                if (firebaseAuth.getCurrentUser().getDisplayName() != null) {
+                    nav_header_name.setText(firebaseAuth.getCurrentUser().getDisplayName());
+                }
+
+                nav_header_email.setText(firebaseAuth.getCurrentUser().getEmail());
+            }
+
+            navigationView.setNavigationItemSelectedListener(this);
+        }else{
+
+            new AlertDialog.Builder(this , R.style.AlertDialogStyle)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Closing the App")
+                    .setMessage("No Internet Connection,check your settings")
+                    .setPositiveButton("Close", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .show();
+
         }
+    }
 
-        nav_header_email.setText(firebaseAuth.getCurrentUser().getEmail());
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
-        navigationView.setNavigationItemSelectedListener(this);
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(this, "No Internet connection!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     @Override
