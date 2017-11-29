@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -84,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setMessage("Registering...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString().trim();
+        final String email = _emailText.getText().toString().trim();
         String password = _passwordText.getText().toString().trim();
 
         firebaseAuth.createUserWithEmailAndPassword(email,password)
@@ -94,28 +97,44 @@ public class SignUpActivity extends AppCompatActivity {
 
                         if(task.isSuccessful()){
 
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(email.split("@")[0])
+                                    .build();
+
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "User profile updated.");
+                                            }
+                                        }
+                                    });
 
                             new AlertDialog.Builder(SignUpActivity.this , R.style.AlertDialogStyle)
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .setTitle("Registration Successful")
                                     .setMessage("Welcome to SMARK.")
-                                    .setPositiveButton("Login", new DialogInterface.OnClickListener()
+                                    .setPositiveButton("Close", new DialogInterface.OnClickListener()
                                     {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            firebaseAuth.signOut();
                                             finish();
                                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                         }
 
                                     })
-                                    .setNegativeButton("Close", new DialogInterface.OnClickListener()
+                                   /* .setNegativeButton("Close", new DialogInterface.OnClickListener()
                                     {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.cancel();
                                         }
 
-                                    })
+                                    })*/
                                     .show();
 
 

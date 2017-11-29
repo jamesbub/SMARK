@@ -78,6 +78,15 @@ public class MainActivity extends AppCompatActivity
             }
 
             navigationView.setNavigationItemSelectedListener(this);
+
+            header.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    startActivity(new Intent(getApplicationContext(),UpdateUserProfile.class));
+                }
+            });
         }else{
 
             new AlertDialog.Builder(this , R.style.AlertDialogStyle)
@@ -95,6 +104,7 @@ public class MainActivity extends AppCompatActivity
                     .show();
 
         }
+
     }
 
     public boolean isOnline() {
