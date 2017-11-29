@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .setTitle("Registration Successful")
                                     .setMessage("Welcome to SMARK.")
-                                    .setPositiveButton("Close", new DialogInterface.OnClickListener()
+                                    .setPositiveButton("Login", new DialogInterface.OnClickListener()
                                     {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -127,14 +127,14 @@ public class SignUpActivity extends AppCompatActivity {
                                         }
 
                                     })
-                                   /* .setNegativeButton("Close", new DialogInterface.OnClickListener()
+                                    .setNegativeButton("Close", new DialogInterface.OnClickListener()
                                     {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.cancel();
                                         }
 
-                                    })*/
+                                    })
                                     .show();
 
 
