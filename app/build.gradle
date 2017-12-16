@@ -8,6 +8,8 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -34,6 +36,9 @@ dependencies {
 
     implementation 'com.jakewharton:butterknife:6.1.0'
     implementation 'com.google.firebase:firebase-auth:11.6.0'
+
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.kyleduo.blurpopupwindow:blurpopupwindow:1.0.8'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -29,4 +29,7 @@
     <string name="action_logout">Logout</string>
     <string name="btn_signup">Register</string>
     <string name="already_signin">Already Signed In? Click here to Login</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="btn_update">Update</string>
 </resources>
