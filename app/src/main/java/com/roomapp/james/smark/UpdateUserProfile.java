@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -27,10 +28,21 @@ import android.widget.Toast;
 import com.kyleduo.blurpopupwindow.library.BlurPopupWindow;
 import com.roomapp.james.smark.R;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class UpdateUserProfile extends AppCompatActivity {
 
 
-    private PopupWindow popupWindow;
+    BlurPopupWindow.Builder builder;
+    BlurPopupWindow blurPopupWindow;
+    PopupWindow popupWindow;
+
+    @InjectView(R.id.input_name)
+    EditText _name;
+
+    @InjectView(R.id.input_phone)
+    EditText _phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +60,63 @@ public class UpdateUserProfile extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initiatePopupWindow(view);
+                initiatePopupWindowGeneral(view);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    private void initiatePopupWindowGeneral(View view) {
 
-    private void initiatePopupWindow(View view) {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) UpdateUserProfile.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        new BlurPopupWindow.Builder(view.getContext())
-                .setContentView(R.layout.update_popup_layout)
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.update_popup_layout,
+                    (ViewGroup) findViewById(R.id.popup_element));
+
+            // create the popup window
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            boolean focusable = true; // lets taps outside the popup also dismiss it
+            popupWindow = new PopupWindow(layout, width, height, focusable);
+
+
+            // display the popup in the center
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            // dismiss the popup window when touched
+            layout.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    popupWindow.dismiss();
+                    return true;
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void initiatePopupWindow(final View view) {
+
+        builder =  new BlurPopupWindow.Builder(view.getContext());
+        blurPopupWindow = builder.setContentView(R.layout.update_popup_layout)
                 .bindClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "Click Button", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(v.getContext(), _name.getText().toString()+_phone.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        if (null != blurPopupWindow)
+                        blurPopupWindow.dismiss();
                     }
                 }, R.id.btn_update)
                 .setGravity(Gravity.CENTER)
                 .setScaleRatio(0.2f)
                 .setBlurRadius(10)
                 .setTintColor(0x30000000)
-                .build()
-                .show();
+                .build();
+        blurPopupWindow.show();
     }
 }
